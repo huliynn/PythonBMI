@@ -36,7 +36,7 @@
               <form method="post" action="{{ url_for('index') }}" novalidate>
                 <div class="form-fields">
                   <div class="field">
-                    <label for="height">身高 <span>HEIGHT</span></label>
+                    <label for="height">你的身高 <span>HEIGHT</span></label>
                     <div class="input-wrap">
                       <input id="height" name="height" type="number" inputmode="decimal" min="0.01" step="any" placeholder="例如 170" value="{{ height_input }}" required {% if errors.height %}aria-invalid="true" aria-describedby="height-error"{% endif %}>
                       <span class="unit">cm</span>
@@ -44,7 +44,7 @@
                     {% if errors.height %}<p class="field-error" id="height-error">{{ errors.height }}</p>{% endif %}
                   </div>
                   <div class="field">
-                    <label for="weight">體重 <span>WEIGHT</span></label>
+                    <label for="weight">你的體重 <span>WEIGHT</span></label>
                     <div class="input-wrap">
                       <input id="weight" name="weight" type="number" inputmode="decimal" min="0.01" step="any" placeholder="例如 65" value="{{ weight_input }}" required {% if errors.weight %}aria-invalid="true" aria-describedby="weight-error"{% endif %}>
                       <span class="unit">kg</span>
