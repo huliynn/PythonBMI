@@ -73,7 +73,7 @@
                   <path class="gauge-band gauge-healthy" d="M 20 120 A 100 100 0 0 1 220 120" pathLength="1000" stroke-dasharray="183.33 1000" stroke-dashoffset="-283.33"></path>
                   <path class="gauge-band gauge-high" d="M 20 120 A 100 100 0 0 1 220 120" pathLength="1000" stroke-dasharray="100 1000" stroke-dashoffset="-466.66"></path>
                   <path class="gauge-band gauge-obese" d="M 20 120 A 100 100 0 0 1 220 120" pathLength="1000" stroke-dasharray="433.34 1000" stroke-dashoffset="-566.66"></path>
-                  <line class="gauge-needle" x1="120" y1="120" x2="120" y2="39" style="transform: rotate({{ result.pointer_angle }}deg)"></line>
+                  <line class="gauge-needle" x1="120" y1="120" x2="120" y2="39" style="transform: rotate({{ '%.1f'|format(result.pointer_angle) }}deg)"></line>
                   <circle class="gauge-hub" cx="120" cy="120" r="7"></circle>
                   <text class="gauge-tick" x="20" y="146" text-anchor="start">10</text>
                   <text class="gauge-tick" x="76.7" y="146" text-anchor="middle">18.5</text>
