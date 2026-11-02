@@ -65,10 +65,26 @@
                   <span class="result-number">{{ result.bmi }}</span>
                   <span class="result-unit">BMI</span>
                 </div>
-                <div class="result-divider"></div>
+                <svg class="bmi-gauge" viewBox="0 0 240 160" role="img" aria-labelledby="gauge-title gauge-description">
+                  <title id="gauge-title">BMI 體位區間儀表圖</title>
+                  <desc id="gauge-description">目前 BMI {{ result.bmi }}，分類為{{ result.label }}。指針會在過輕、健康體位、過重與肥胖區間顯示目前位置。</desc>
+                  <path class="gauge-track" d="M 20 120 A 100 100 0 0 1 220 120" pathLength="1000"></path>
+                  <path class="gauge-band gauge-low" d="M 20 120 A 100 100 0 0 1 220 120" pathLength="1000" stroke-dasharray="283.33 1000"></path>
+                  <path class="gauge-band gauge-healthy" d="M 20 120 A 100 100 0 0 1 220 120" pathLength="1000" stroke-dasharray="183.33 1000" stroke-dashoffset="-283.33"></path>
+                  <path class="gauge-band gauge-high" d="M 20 120 A 100 100 0 0 1 220 120" pathLength="1000" stroke-dasharray="100 1000" stroke-dashoffset="-466.66"></path>
+                  <path class="gauge-band gauge-obese" d="M 20 120 A 100 100 0 0 1 220 120" pathLength="1000" stroke-dasharray="433.34 1000" stroke-dashoffset="-566.66"></path>
+                  <line class="gauge-needle" x1="120" y1="120" x2="120" y2="39" style="transform: rotate({{ result.pointer_angle }}deg)"></line>
+                  <circle class="gauge-hub" cx="120" cy="120" r="7"></circle>
+                  <text class="gauge-tick" x="20" y="146" text-anchor="start">10</text>
+                  <text class="gauge-tick" x="76.7" y="146" text-anchor="middle">18.5</text>
+                  <text class="gauge-tick" x="113.3" y="146" text-anchor="middle">24</text>
+                  <text class="gauge-tick" x="136.7" y="146" text-anchor="middle">27</text>
+                  <text class="gauge-tick" x="220" y="146" text-anchor="end">40+</text>
+                </svg>
                 <span class="result-label">你的體位屬於 <strong>{{ result.label }}</strong></span>
                 <h2 id="result-title">給你的健康建議</h2>
                 <p>{{ result.advice }}</p>
+                <div class="risk-note"><strong>健康提醒</strong><span>{{ result.risk }}</span></div>
                 <span class="result-decoration" aria-hidden="true">✳</span>
               </section>
             {% else %}

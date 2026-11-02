@@ -20,6 +20,16 @@ class BmiAppTests(unittest.TestCase):
         self.assertIn("22.5", page)
         self.assertIn("健康體位", page)
         self.assertIn("維持均衡飲食", page)
+        self.assertIn('class="bmi-gauge"', page)
+        self.assertIn("目前 BMI 22.5", page)
+        self.assertIn("style=\"transform: rotate(-15.0deg)\"", page)
+        self.assertIn("健康提醒", page)
+
+    def test_gauge_pointer_is_clamped_to_scale(self):
+        for weight, angle in [("10", "-90.0"), ("300", "90.0")]:
+            with self.subTest(weight=weight):
+                response = self.client.post("/", data={"height": "100", "weight": weight})
+                self.assertIn(f"rotate({angle}deg)", response.get_data(as_text=True))
 
     def test_taiwan_adult_thresholds(self):
         for bmi, category in [
