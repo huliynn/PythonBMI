@@ -13,6 +13,7 @@ class BmiAppTests(unittest.TestCase):
         page = response.get_data(as_text=True)
         self.assertIn("了解自己的<br><em>健康狀況。</em>", page)
         self.assertIn("計算你的 BMI", page)
+        self.assertIn('name="name"', page)
 
     def test_calculation_and_advice(self):
         response = self.client.post("/", data={"height": "170", "weight": "65"})
@@ -24,6 +25,16 @@ class BmiAppTests(unittest.TestCase):
         self.assertIn("目前 BMI 22.5", page)
         self.assertIn("style=\"transform: rotate(-15.0deg)\"", page)
         self.assertIn("健康提醒", page)
+
+    def test_name_is_included_in_advice(self):
+        response = self.client.post("/", data={"name": "小明", "height": "170", "weight": "65"})
+        page = response.get_data(as_text=True)
+        self.assertIn("<p>小明，維持均衡飲食", page)
+
+    def test_name_is_preserved_when_measurements_are_invalid(self):
+        response = self.client.post("/", data={"name": "小明", "height": "", "weight": "65"})
+        page = response.get_data(as_text=True)
+        self.assertIn('value="小明"', page)
 
     def test_gauge_pointer_is_clamped_to_scale(self):
         for weight, angle in [("10", "-90.0"), ("300", "90.0")]:
@@ -57,6 +68,12 @@ class BmiAppTests(unittest.TestCase):
         page = response.get_data(as_text=True)
         self.assertNotIn("<script>", page)
         self.assertIn("請輸入大於 0", page)
+
+    def test_name_is_escaped_in_advice(self):
+        response = self.client.post("/", data={"name": "<script>alert(1)</script>", "height": "170", "weight": "65"})
+        page = response.get_data(as_text=True)
+        self.assertIn("&lt;script&gt;alert(1)&lt;/script&gt;，維持均衡飲食", page)
+        self.assertNotIn("<script>alert(1)</script>", page)
 
 
 if __name__ == "__main__":
